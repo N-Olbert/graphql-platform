@@ -11,6 +11,12 @@ namespace GreenDonut.Data;
 /// </typeparam>
 public sealed class Page<T> : IEnumerable<T>
 {
+    private static readonly Page<T> s_empty = new([], false, false, _ => string.Empty);
+
+    // Note: When the total count is included, an empty page also has a fixed total count of zero
+    // (instead of null, which means that the total count is unknown)
+    private static readonly Page<T> s_emptyTotalCountIncluded = new([], false, false, _ => string.Empty, 0);
+
     private readonly ImmutableArray<T> _items;
     private readonly bool _hasNextPage;
     private readonly bool _hasPreviousPage;
@@ -157,9 +163,18 @@ public sealed class Page<T> : IEnumerable<T>
     }
 
     /// <summary>
-    /// An empty page.
+    /// Gets an empty page.
     /// </summary>
-    public static Page<T> Empty => new([], false, false, _ => string.Empty);
+    /// <param name="includeTotalCount">A value indicating whether the total count should be included or not</param>
+    public static Page<T> Empty(bool includeTotalCount = false) =>
+        includeTotalCount ? s_emptyTotalCountIncluded : s_empty;
+
+    /// <summary>
+    /// Gets an empty page.
+    /// </summary>
+    /// <param name="pagingArguments">The paging arguments.</param>
+    public static Page<T> Empty(PagingArguments pagingArguments) =>
+        Empty(pagingArguments.IncludeTotalCount);
 
     /// <summary>
     /// Gets the enumerator for the items of this page.

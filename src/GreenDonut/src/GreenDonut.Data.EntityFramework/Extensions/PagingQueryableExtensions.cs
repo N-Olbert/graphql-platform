@@ -225,7 +225,7 @@ public static class PagingQueryableExtensions
 
         if (builder.Count == 0)
         {
-            return Page<T>.Empty;
+            return Page<T>.Empty(includeTotalCount);
         }
 
         if (isBackward)
@@ -475,7 +475,7 @@ public static class PagingQueryableExtensions
         {
             if (item.Items.Count == 0)
             {
-                map.Add(item.Key, Page<TValue>.Empty);
+                map.Add(item.Key, Page<TValue>.Empty(includeTotalCount));
                 continue;
             }
 

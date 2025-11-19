@@ -28,7 +28,7 @@ public class ProductService(CatalogContext context, IProductBatchingContext batc
         => await batchingContext.ProductsByBrand
             .With(pagingArgs, query)
             .LoadAsync(brandId, cancellationToken)
-            ?? Page<Product>.Empty;
+            ?? Page<Product>.Empty(pagingArgs);
 
     private static SortDefinition<Product> DefaultOrder(SortDefinition<Product> sort)
         => sort.IfEmpty(o => o.AddDescending(t => t.Name)).AddAscending(t => t.Id);

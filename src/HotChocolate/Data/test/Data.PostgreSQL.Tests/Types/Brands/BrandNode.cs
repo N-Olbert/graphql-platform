@@ -25,7 +25,7 @@ public static partial class BrandNode
         // we for test purposes only return an empty page if the connection flags are set to PageInfo
         if (connectionFlags == ConnectionFlags.PageInfo)
         {
-            return new PageConnection<Product>(Page<Product>.Empty);
+            return new PageConnection<Product>(Page<Product>.Empty(pagingArgs));
         }
 
         var page = await productService.GetProductsByBrandAsync(brand.Id, pagingArgs, query, cancellationToken);

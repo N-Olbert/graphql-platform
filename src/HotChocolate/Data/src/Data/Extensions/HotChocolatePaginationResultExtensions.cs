@@ -182,7 +182,7 @@ public static class HotChocolatePaginationResultExtensions
 
     private static Connection<T> CreateConnection<T>(Page<T>? page) where T : class
     {
-        page ??= Page<T>.Empty;
+        page ??= Page<T>.Empty();
 
         return new Connection<T>(
             page.Items.Select(t => new Edge<T>(t, page.CreateCursor)).ToArray(),
@@ -200,7 +200,7 @@ public static class HotChocolatePaginationResultExtensions
         where TTarget : class
         where TSource : class
     {
-        page ??= Page<TSource>.Empty;
+        page ??= Page<TSource>.Empty();
 
         return new Connection<TTarget>(
             page.Items.Select(t => createEdge(t, page.CreateCursor(t))).ToArray(),
@@ -218,7 +218,7 @@ public static class HotChocolatePaginationResultExtensions
         where TTarget : class
         where TSource : class
     {
-        page ??= Page<TSource>.Empty;
+        page ??= Page<TSource>.Empty();
 
         return new Connection<TTarget>(
             page.Items.Select(t => createEdge(t, page)).ToArray(),

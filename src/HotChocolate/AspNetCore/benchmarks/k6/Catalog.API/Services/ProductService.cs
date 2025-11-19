@@ -32,5 +32,5 @@ public class ProductService(
         => await productsByBrandId
             .With(pagingArgs, query)
             .LoadAsync(brandId, cancellationToken)
-            ?? Page<Product>.Empty;
+            ?? Page<Product>.Empty(pagingArgs);
 }
